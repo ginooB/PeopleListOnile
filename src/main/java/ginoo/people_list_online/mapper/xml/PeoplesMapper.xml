@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ginoo.people_list_online.mapper.PeoplesMapper">
+  <resultMap id="BaseResultMap" type="ginoo.people_list_online.modal.Peoples">
+    <id column="peoples_id" jdbcType="VARCHAR" property="peoplesId" />
+    <result column="peoples_name" jdbcType="VARCHAR" property="peoplesName" />
+    <result column="peoples_sex" jdbcType="VARCHAR" property="peoplesSex" />
+    <result column="peoples_age" jdbcType="INTEGER" property="peoplesAge" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    peoples_id, peoples_name, peoples_sex, peoples_age
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from peoples
+    where peoples_id = #{peoplesId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from peoples
+    where peoples_id = #{peoplesId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="ginoo.people_list_online.modal.Peoples">
+    insert into peoples (peoples_id, peoples_name, peoples_sex, 
+      peoples_age)
+    values (#{peoplesId,jdbcType=VARCHAR}, #{peoplesName,jdbcType=VARCHAR}, #{peoplesSex,jdbcType=VARCHAR}, 
+      #{peoplesAge,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="ginoo.people_list_online.modal.Peoples">
+    insert into peoples
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="peoplesId != null">
+        peoples_id,
+      </if>
+      <if test="peoplesName != null">
+        peoples_name,
+      </if>
+      <if test="peoplesSex != null">
+        peoples_sex,
+      </if>
+      <if test="peoplesAge != null">
+        peoples_age,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="peoplesId != null">
+        #{peoplesId,jdbcType=VARCHAR},
+      </if>
+      <if test="peoplesName != null">
+        #{peoplesName,jdbcType=VARCHAR},
+      </if>
+      <if test="peoplesSex != null">
+        #{peoplesSex,jdbcType=VARCHAR},
+      </if>
+      <if test="peoplesAge != null">
+        #{peoplesAge,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="ginoo.people_list_online.modal.Peoples">
+    update peoples
+    <set>
+      <if test="peoplesName != null">
+        peoples_name = #{peoplesName,jdbcType=VARCHAR},
+      </if>
+      <if test="peoplesSex != null">
+        peoples_sex = #{peoplesSex,jdbcType=VARCHAR},
+      </if>
+      <if test="peoplesAge != null">
+        peoples_age = #{peoplesAge,jdbcType=INTEGER},
+      </if>
+    </set>
+    where peoples_id = #{peoplesId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="ginoo.people_list_online.modal.Peoples">
+    update peoples
+    set peoples_name = #{peoplesName,jdbcType=VARCHAR},
+      peoples_sex = #{peoplesSex,jdbcType=VARCHAR},
+      peoples_age = #{peoplesAge,jdbcType=INTEGER}
+    where peoples_id = #{peoplesId,jdbcType=VARCHAR}
+  </update>
+  <select id="selectAll" resultMap="BaseResultMap">
+  	select <include refid="Base_Column_List"></include> from peoples
+  </select>
+</mapper>
